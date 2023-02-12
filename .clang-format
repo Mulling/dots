@@ -1,0 +1,13 @@
+---
+BasedOnStyle: Google
+AccessModifierOffset: '-4'
+AlwaysBreakTemplateDeclarations: 'Yes'
+Cpp11BracedListStyle: 'false'
+DerivePointerAlignment: false
+IndentWidth: '4'
+PointerAlignment: Left
+SortIncludes: 'true'
+SpaceAfterTemplateKeyword: 'true'
+SpaceBeforeCpp11BracedList: 'true'
+SpacesInContainerLiterals: 'true'
+...

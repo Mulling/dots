@@ -1,0 +1,42 @@
+#!/bin/bash
+
+# stolen form tsoding
+
+# TODO: deploy /etc/* config files
+# TODO: patch the kernel
+# TODO: patch and install st, dwm ...
+
+declare -A arr
+
+DOTS_PATH="$HOME/dots/"
+
+arr["$DOTS_PATH.ssh/config"]="$HOME/.ssh/config"
+arr["$DOTS_PATH.clang-format"]="$HOME/.clang-format"
+arr["$DOTS_PATH.bashrc"]="$HOME/.bashrc"
+arr["$DOTS_PATH.gitconfig"]="$HOME/.gitconfig"
+arr["$DOTS_PATH.Xresources"]="$HOME/.Xresources"
+arr["$DOTS_PATH.xinitrc"]="$HOME/.xinitrc"
+arr["$DOTS_PATH.config/zathura/zathurarc"]="$HOME/.config/zathura/zathurarc"
+# arr["$DOTS_PATH.emacs.d/init.el"]="$HOME/.emacs.d/init.el"
+arr["$DOTS_PATH.config/nvim/init.lua"]="$HOME/.config/nvim/init.lua"
+arr["$DOTS_PATH.config/nvim/colors/based.vim"]="$HOME/.config/nvim/colors/based.vim"
+arr["$DOTS_PATH.config/tmux/tmux.conf"]="$HOME/.config/tmux/tmux.conf"
+
+for key in "${!arr[@]}"; do
+
+    if [ ! -d "$(dirname "${arr[${key}]}")" ]; then
+        printf "\033[33m [ OK ] mkdir %s " "$(dirname "${arr[${key}]}")"
+        mkdir -p "$(dirname "${arr[${key}]}")"
+    fi
+
+    if [ ! -L "${arr[${key}]}" ]; then
+        if [ -e "${arr[${key}]}" ]; then
+            printf "\033[31m [FAIL] \033[m%s alredy exists, and its is not a syslink\n" "${arr[${key}]}" && exit 1
+        else
+            ln -s "${key}" "${arr[${key}]}"
+            printf "\033[33m [LINK] \033[mln -s %s -> %s\n" "${key}" "${arr[${key}]}"
+        fi
+    else
+        printf "\033[32m [ OK ] \033[m%s is already syslinked\n" "${key}"
+    fi
+done

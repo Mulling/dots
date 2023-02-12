@@ -1,0 +1,5 @@
+#!/bin/sh
+
+# scrot to the clipboard with selection
+
+/usr/bin/scrot --select --line mode=edge '/tmp/%s.png' -e 'xclip -selection clipboard -t image/png -i $f'

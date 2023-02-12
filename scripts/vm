@@ -1,0 +1,100 @@
+#!/bin/bash
+
+# TODO: fix this
+
+usage() {
+    echo "Adriana podia calar a boca."
+    exit 1
+}
+
+command_exists() {
+    if ! command -v "$1" >/dev/null 2>&1; then
+        echo "I require the command $1 but it's not installed. Abort."
+        exit 1
+    fi
+}
+
+file_exists() {
+    command -v "$1" >/dev/null 2>&1
+    if ! [[ -f $1 ]]; then
+        echo "I require the file '$1' but it's wasn't found. Abort."
+        exit 1
+    fi
+}
+
+confirm() {
+    read -r -p "${1:-Are you sure? [y/N]} " response
+    case $response in
+    [yY][eE][sS] | [yY])
+        true
+        ;;
+    *)
+        false
+        ;;
+    esac
+}
+
+kill_qemu() {
+    if [[ -n $(pidof qemu-system-x86_64) ]]; then
+        start_spinner "Killing qemu-system-x86_64..."
+        sleep 0.1
+        kill "$(pidof qemu-system-x86_64)"
+        stop_spinner $?
+    fi
+}
+
+for i in "qemu-img" "qemu-system-x86_64"; do
+    command_exists "$i"
+done
+
+BASE_DIR="$HOME/.config/vm/"
+
+mkdir -p "$BASE_DIR"
+
+# default values
+DISK_PATH="$BASE_DIR/vm.raw"
+DISK_SIZE="30G"
+
+CORES="$(($(nproc) / 2))"
+
+ISO_PATH=""
+
+while getopts :d:s:p:h:k o; do
+    case "$o" in
+    d)
+        DISK_PATH=$BASE_DIR/$OPTARG
+        ;;
+    s)
+        DISK_SIZE=$OPTARG
+        ;;
+    p)
+        ISO_PATH=$OPTARG
+        ;;
+    h)
+        usage
+        ;;
+    k)
+        kill_qemu
+        exit 0
+        ;;
+    *)
+        usage
+        ;;
+    esac
+done
+shift $((OPTIND - 1))
+
+# if the arch disk image not exits, create one
+if ! [ -f "$DISK_PATH" ]; then
+    qemu-img create -f raw "$DISK_PATH" "$DISK_SIZE" >/dev/null
+fi
+
+qemu-system-x86_64 \
+    --drive file="$DISK_PATH",format=raw \
+    --enable-kvm \
+    -machine q35 \
+    -device intel-iommu \
+    -cpu host \
+    -m "4G" \
+    -smp "$CORES",sockets=1,cores="$CORES" \
+    -cdrom "$ISO_PATH" &

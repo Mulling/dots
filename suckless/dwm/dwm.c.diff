@@ -1,0 +1,47 @@
+--- ../dwm-6.4/dwm.c	2023-02-07 15:06:48.367346945 -0300
++++ dwm.c	2022-12-04 11:32:05.533475453 -0300
+@@ -59,7 +59,7 @@
+
+ /* enums */
+ enum { CurNormal, CurResize, CurMove, CurLast }; /* cursor */
+-enum { SchemeNorm, SchemeSel }; /* color schemes */
++enum { SchemeNorm, SchemeSel, SchemeBar }; /* color schemes */
+ enum { NetSupported, NetWMName, NetWMState, NetWMCheck,
+        NetWMFullscreen, NetActiveWindow, NetWMWindowType,
+        NetWMWindowTypeDialog, NetClientList, NetLast }; /* EWMH atoms */
+@@ -737,7 +737,7 @@
+
+     if ((w = m->ww - tw - x) > bh) {
+         if (m->sel) {
+-            drw_setscheme(drw, scheme[m == selmon ? SchemeSel : SchemeNorm]);
++            drw_setscheme(drw, scheme[m == selmon ? SchemeBar : SchemeNorm]);
+             drw_text(drw, x, 0, w, bh, lrpad / 2, m->sel->name, 0);
+             if (m->sel->isfloating)
+                 drw_rect(drw, x + boxs, boxs, boxw, boxw, m->sel->isfixed, 0);
+@@ -1679,18 +1679,16 @@
+     if (n > m->nmaster)
+         mw = m->nmaster ? m->ww * m->mfact : 0;
+     else
+-        mw = m->ww;
+-    for (i = my = ty = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), i++)
++        mw = m->ww - gappx;
++    for (i = 0, my = ty = gappx, c = nexttiled(m->clients); c; c = nexttiled(c->next), i++)
+         if (i < m->nmaster) {
+-            h = (m->wh - my) / (MIN(n, m->nmaster) - i);
+-            resize(c, m->wx, m->wy + my, mw - (2*c->bw), h - (2*c->bw), 0);
+-            if (my + HEIGHT(c) < m->wh)
+-                my += HEIGHT(c);
++            h = (m->wh - my) / (MIN(n, m->nmaster) - i) - gappx;
++            resize(c, m->wx + m->ww - mw, m->wy + my, mw - (2*c->bw) - gappx, h - (2*c->bw), 0);
++            my += HEIGHT(c) + gappx;
+         } else {
+-            h = (m->wh - ty) / (n - i);
+-            resize(c, m->wx + mw, m->wy + ty, m->ww - mw - (2*c->bw), h - (2*c->bw), 0);
+-            if (ty + HEIGHT(c) < m->wh)
+-                ty += HEIGHT(c);
++            h = (m->wh - ty) / (n - i) - gappx;
++            resize(c, m->wx + gappx, m->wy + ty, m->ww - mw - (2 * c->bw) - 2 * gappx, h - (2*c->bw), 0);
++            ty += HEIGHT(c) + gappx;
+         }
+ }
+

@@ -1,0 +1,33 @@
+#!/bin/sh
+
+PDF_PATH="$HOME/dots/literally-pirated-books"
+
+set -e
+
+select_file () {
+    SELECTED="$(ls -A "$PDF_PATH" \
+        | sort \
+        | dmenu "$@" -w "$WINDOWID" -i -l 15 -p "open PDF:" -fn "Consolas:pixelsize=15" -nb "#1D2021" -nf "#D6C9A4" -sb "#AF3A03" -sf "#EBDBB2")"
+
+    if [ -z "$SELECTED" ]; then
+        exit
+    fi
+
+    if [ -d "$PDF_PATH/$SELECTED" ]; then
+        PDF_PATH="$PDF_PATH/$SELECTED"
+        select_file
+    fi
+}
+
+open_pdf () {
+    SELECTED_PDF="$PDF_PATH/$SELECTED"
+    zathura "$SELECTED_PDF"
+}
+
+select_file "$@"
+
+if [ -n "$SELECTED" ]; then
+    open_pdf
+fi
+
+exit 0

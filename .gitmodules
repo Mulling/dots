@@ -1,0 +1,3 @@
+[submodule "literally-pirated-books"]
+	path = literally-pirated-books
+	url = git@github.com:Mulling/literally-pirated-books.git

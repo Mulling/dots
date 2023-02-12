@@ -1,0 +1,23 @@
+#!/bin/sh
+
+# kill other scripts, if any
+for pid in $(pidof -x "$0"); do
+    [ "$pid" != $$ ] && kill -9 "$pid"
+done
+
+# TODO: rewrite this thing in C, inside dwm without using xsetroot
+
+while true
+do
+    V=$(amixer get Master | tail -n1 | sed -r 's/.*\[(.*%)\].*\[(.*)\].*/VOL:\1\ \2/')
+    D=$(date +"%d-%m-%Y  %H:%M")
+    B=$(cat "/sys/class/power_supply/BAT0/capacity")
+    B="BAT:$B%"
+    M=$(free | grep Mem | awk '{printf "MEM:%d%%", ($3/$2) * 100}')
+    L=$(cat /sys/class/backlight/acpi_video0/brightness)
+    L="BRI:$L%"
+
+    xsetroot -name "$(printf ' %b  %b  %b  %b  %b ' "$M" "$V" "$L" "$B" "$D")"
+
+    sleep 5s
+done &

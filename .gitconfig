@@ -1,0 +1,22 @@
+[user]
+    email    = lmulling@proton.me
+    name     = Mulling
+    username = Mulling
+[format]
+    signoff = true
+[core]
+    editor = nvim
+[alias]
+    tree = "!git log --graph --decorate --pretty=oneline --abbrev-commit"
+    rank = "shortlog -s -n --no-merges"
+[credential]
+    helper = cache --timeout=3600
+[init]
+    defaultBranch = master
+[color "diff"]
+    old  = 8
+    meta = 4
+[pull]
+	rebase = true
+[merge]
+	tool = nvimdiff1

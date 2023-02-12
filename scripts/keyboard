@@ -1,0 +1,21 @@
+#!/bin/bash
+
+LAYOUT="us intl\nus\nbr"
+
+SELECTED="$(echo -e "$LAYOUT" \
+           | dmenu "$@" -w "$WINDOWID" -i -l 15 -p "keyboard layout:" -fn "Consolas:pixelsize=15" -nb "#1D2021" -nf "#D6C9A4" -sb "#AF3A03" -sf "#EBDBB2")"
+
+case $SELECTED in
+    "us intl")
+        setxkbmap -layout us -variant intl
+        ;;
+    "us")
+        setxkbmap -layout us
+        ;;
+    "br")
+        setxkbmap -layout br
+        ;;
+    *)
+        setxkbmap -layout us
+        ;;
+esac
