@@ -1,12 +1,12 @@
 <div align="center">
-    <img src="misc/monke.png" width="20%" height="20%"/>
+    <img src="misc/monke.png" width="25%" height="25%"/>
 </div>
 
-## About
+## About:
 
 This repo contains patches for `st`, `dwm`, scripts, and configuration files for various pieces of software.
 
-## Using
+## Using:
 
 Clone the repo:
 ```
