@@ -15,7 +15,7 @@ $ git clone git@github.com:Mulling/dots.git
 
 Deploy the config files:
 ```bash
-dots/deploy
+$ cd dots && ./deploy
 ```
 
 ## TODO:
