@@ -1,0 +1,11 @@
+#!/bin/bash
+
+TAG="volume"
+
+[ -z "$1" ] && exit 1
+
+pactl set-sink-volume "@DEFAULT_SINK@" "$1%"
+
+volume=$(amixer get Master | tail -n1 | sed -r 's/.*\[(.*%)\].*\[(.*)\].*/\1/')
+
+dunstify -u low -h string:x-dunst-stack-tag:$TAG -h int:value:"$volume" "Volume: ${volume}"
