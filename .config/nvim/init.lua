@@ -222,6 +222,13 @@ require 'lspconfig'['hls'].setup {
     filetypes = { 'haskell', 'lhaskell', 'cabal' }
 }
 
+require 'lspconfig'['tsserver'].setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+    filetypes = { "typescript", "typescriptreact", "typescript.tsx" },
+    cmd = { "typescript-language-server", "--stdio" }
+}
+
 
 local UsrFileype = vim.api.nvim_create_augroup("UsrFiletype", { clear = true })
 

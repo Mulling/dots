@@ -1,5 +1,5 @@
 --- ../dwm-6.4/dwm.c	2023-02-07 15:06:48.367346945 -0300
-+++ dwm.c	2023-02-18 15:37:30.877007370 -0300
++++ dwm.c	2023-02-18 19:49:55.573395443 -0300
 @@ -59,7 +59,7 @@
 
  /* enums */
@@ -71,9 +71,9 @@
 +    };
 +
 +    static char *notifys[] = {
-+        "notify-send -r 69 \"Keyboard layout: us -variant intl\"",
-+        "notify-send -r 69 \"Keyboard layout: us\"",
-+        "notify-send -r 69 \"Keyboard layout: br\""
++        "notify-send -r 69 \"Layout: US Variant: intl\"",
++        "notify-send -r 69 \"Layout: US\"",
++        "notify-send -r 69 \"Layout: BR\""
 +    };
 +
 +    // NOTE: should probably check for errors

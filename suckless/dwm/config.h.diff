@@ -1,5 +1,5 @@
 --- ../dwm-6.4/config.h	2023-02-07 15:06:35.380679887 -0300
-+++ config.h	2023-02-18 15:37:56.580341488 -0300
++++ config.h	2023-02-18 19:45:02.036706626 -0300
 @@ -1,21 +1,24 @@
  /* See LICENSE file for copyright and license details. */
 
@@ -69,7 +69,7 @@
  #define TAGKEYS(KEY,TAG) \
      { MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
      { MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
-@@ -56,27 +59,34 @@
+@@ -56,27 +59,32 @@
  #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
  /* commands */
@@ -77,13 +77,11 @@
 -static const char *termcmd[]  = { "st", NULL };
 +static const char *dmenucmd[] = { "dmenu_run", "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, "-p", "run:", NULL };
 +static const char *termcmd[]  = { "/usr/local/bin/st", NULL };
-+static const char *upvol[]    = { "volume", "+5", NULL };
-+static const char *downvol[]  = { "volume", "-5", NULL };
-+static const char *mutevol[]  = { "/usr/bin/pactl", "set-sink-mute",   "@DEFAULT_SINK@", "toggle",  NULL };
++static const char *vup[]      = { "volume", "+5", NULL };
++static const char *vdown[]    = { "volume", "-5", NULL };
++static const char *vmute[]    = { "/usr/bin/pactl", "set-sink-mute",   "@DEFAULT_SINK@", "toggle",  NULL };
 +static const char *lock[]     = { "/bin/bash", "-c", "cat /etc/issue | head -n 14 | xargs -0 -I {} physlock -m -p \"{}Artix Linux $(uname -r)\"", NULL};
-+static const char *book[]     = { "/bin/bash", "-c", "book", NULL};
-+// static const char *briup[]    = { "/usr/bin/light", "-A", "1", NULL };
-+// static const char *bridown[]  = { "/usr/bin/light", "-U", "1", NULL };
++static const char *pdf[]      = { "pdf", NULL };
 
  static const Key keys[] = {
      /* modifier                     key        function        argument */
@@ -112,21 +110,19 @@
      { MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
      { MODKEY,                       XK_0,      view,           {.ui = ~0 } },
      { MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
-@@ -94,6 +104,18 @@
+@@ -94,6 +102,16 @@
      TAGKEYS(                        XK_8,                      7)
      TAGKEYS(                        XK_9,                      8)
      { MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 +#include <X11/XF86keysym.h>
-+    { 0,         XF86XK_AudioLowerVolume,      spawn,          {.v = downvol } },
-+    { 0,                XF86XK_AudioMute,      spawn,          {.v = mutevol } },
-+    { 0,         XF86XK_AudioRaiseVolume,      spawn,          {.v = upvol   } },
-+//  { 0,          XF86XK_MonBrightnessUp,      spawn,          {.v = briup   } },
-+//  { 0,        XF86XK_MonBrightnessDown,      spawn,          {.v = bridown } },
-+    { MODKEY,                       XK_Down,   spawn,          {.v = downvol } },
-+    { MODKEY,                       XK_Right,  spawn,          {.v = mutevol } },
-+    { MODKEY,                       XK_Up,     spawn,          {.v = upvol   } },
-+    { MODKEY,                       XK_o,      spawn,          {.v = book    } },
-+    { MODKEY|ShiftMask,             XK_f,      spawn,          {.v = lock    } },
++    { 0,         XF86XK_AudioLowerVolume,      spawn,          {.v = vdown } },
++    { 0,                XF86XK_AudioMute,      spawn,          {.v = vmute } },
++    { 0,         XF86XK_AudioRaiseVolume,      spawn,          {.v = vup } },
++    { MODKEY,                       XK_Down,   spawn,          {.v = vdown } },
++    { MODKEY,                       XK_Right,  spawn,          {.v = vmute } },
++    { MODKEY,                       XK_Up,     spawn,          {.v = vup } },
++    { MODKEY,                       XK_o,      spawn,          {.v = pdf } },
++    { MODKEY|ShiftMask,             XK_f,      spawn,          {.v = lock } },
 +    { MODKEY,                       XK_space,  kbl,            {0} },
  };
 
