@@ -194,7 +194,7 @@ require 'lspconfig'['clangd'].setup {
     root_dir = require 'lspconfig'.util.root_pattern('build/compile_commands.json', '.git')
 }
 
-require 'lspconfig'['sumneko_lua'].setup {
+require 'lspconfig'['lua_ls'].setup {
     on_attach = on_attach,
     capabilities = capabilities,
     -- Fix warning for global variable 'vim'
