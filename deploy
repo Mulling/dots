@@ -26,7 +26,7 @@ arr["$DOTS_PATH.config/dunst/dunstrc"]="$HOME/.config/dunst/dunstrc"
 for key in "${!arr[@]}"; do
 
     if [ ! -d "$(dirname "${arr[${key}]}")" ]; then
-        printf "\033[33m [ OK ] mkdir %s " "$(dirname "${arr[${key}]}")"
+        printf "\033[33m [ OK ] \033[mmkdir %s " "$(dirname "${arr[${key}]}")"
         mkdir -p "$(dirname "${arr[${key}]}")"
     fi
 

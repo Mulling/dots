@@ -19,4 +19,4 @@ export \
 [ -f "$HOME/.fehbg" ] && "$HOME/.fehbg" 2>/dev/null
 [ -f "$HOME/dots/scripts/status" ] && "$HOME/dots/scripts/status" 2>/dev/null
 
-exec dwm 2>/dev/null
+exec dwm >/dev/null 2>&1

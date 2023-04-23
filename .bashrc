@@ -44,7 +44,7 @@ case $TERM in
         ;;
 esac
 
-xhost +local:root > /dev/null 2>&1
+xhost +local:root >/dev/null 2>&1
 
 shopt -s \
     checkwinsize \
