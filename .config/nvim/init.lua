@@ -43,7 +43,6 @@ vim.g.loaded_netrwPlugin = 1
 
 -- Behave like emacs
 vim.opt.scrolljump = -50
-
 -- Search
 vim.opt.smartcase = true
 vim.opt.ignorecase = true
@@ -108,7 +107,9 @@ map('n', '<leader>?', function()
     require 'telescope.builtin'.oldfiles({ prompt_title = 'Recently Opened' })
 end)
 
-local on_attach = function(_, buff)
+local on_attach = function(client, buff)
+    -- Why is this on by default
+    client.server_capabilities.semanticTokensProvider = nil
     local lsp_map = function(mode, key, bind)
         vim.keymap.set(mode, key, bind, { noremap = true, silent = true, buffer = buff })
     end
@@ -187,7 +188,6 @@ require 'cmp'.setup {
 }
 
 local capabilities = require 'cmp_nvim_lsp'.default_capabilities(vim.lsp.protocol.make_client_capabilities())
-
 require 'lspconfig'['clangd'].setup {
     on_attach = on_attach,
     capabilities = capabilities,
