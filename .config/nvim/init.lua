@@ -204,14 +204,22 @@ require 'lspconfig'['lua_ls'].setup {
 require 'lspconfig'['rust_analyzer'].setup {
     on_attach = on_attach,
     capabilities = capabilities,
+    root_dir = require 'lspconfig'.util.root_pattern('Cargo.toml', 'rust-project.json', '.git'),
     settings = {
         ["rust-analyzer"] = {
+            -- TODO: automate this
             checkOnSave = {
-                allFeatures = true,
-                overrideCommand = {
-                    'cargo', 'clippy', '--workspace', '--message-format=json', '--all-targets', '--all-features'
-                }
-            }
+                command = "clippy"
+            },
+            procMacro = {
+                enable = false
+            },
+            -- checkOnSave = {
+            --     allFeatures = true,
+            --     overrideCommand = {
+            --         'cargo', 'clippy', '--workspace', '--message-format=json', '--all-targets', '--all-features'
+            --     }
+            -- }
         }
     }
 }
@@ -228,7 +236,6 @@ require 'lspconfig'['tsserver'].setup {
     filetypes = { "typescript", "typescriptreact", "typescript.tsx" },
     cmd = { "typescript-language-server", "--stdio" }
 }
-
 
 local UsrFileype = vim.api.nvim_create_augroup("UsrFiletype", { clear = true })
 

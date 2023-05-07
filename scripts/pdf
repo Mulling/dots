@@ -7,7 +7,7 @@ set -e
 select_file () {
     SELECTED="$(ls "$PDF_PATH" \
         | sort \
-        | dmenu "$@" -w "$WINDOWID" -i -l 15 -p "open PDF:" -fn "Consolas:pixelsize=15" -nb "#1D2021" -nf "#D6C9A4" -sb "#AF3A03" -sf "#EBDBB2")"
+        | dmenu "$@" -w "$WINDOWID" -i -l 15 -p "open PDF:" -fn "Consolas:pixelsize=16" -nb "#1D2021" -nf "#D6C9A4" -sb "#AF3A03" -sf "#EBDBB2")"
 
     if [ -z "$SELECTED" ]; then
         exit

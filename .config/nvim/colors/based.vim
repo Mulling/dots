@@ -87,3 +87,6 @@ hi! link CmpItemKindVariable   Identifier
 
 hi! link NvimTreeStatusLine    StatusLineNU
 hi! link NvimTreeStatusLineNC  StatusLineNU
+
+" sorry what!?
+hi! link @error Comment
