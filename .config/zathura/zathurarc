@@ -1,4 +1,4 @@
-set selection-clipboard clipboard
+uset selection-clipboard clipboard
 set adjust-open "width"
 
 # this is bugged and causes the background of the statusbar to be transparent
