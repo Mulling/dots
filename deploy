@@ -22,6 +22,7 @@ arr["$DOTS_PATH.config/nvim/init.lua"]="$HOME/.config/nvim/init.lua"
 arr["$DOTS_PATH.config/nvim/colors/based.vim"]="$HOME/.config/nvim/colors/based.vim"
 arr["$DOTS_PATH.config/tmux/tmux.conf"]="$HOME/.config/tmux/tmux.conf"
 arr["$DOTS_PATH.config/dunst/dunstrc"]="$HOME/.config/dunst/dunstrc"
+arr["$DOTS_PATH.config/user-dirs.dirs"]="$HOME/.config/user-dirs.dirs"
 
 for key in "${!arr[@]}"; do
 
