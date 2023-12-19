@@ -1,0 +1,10 @@
+#!/bin/sh
+
+usage () {
+    echo "usage: $0 domain host-port guest-port"
+    exit 1
+}
+
+! [ $# -ne 3 ] || usage
+
+virsh qemu-monitor-command --hmp "$1" "hostfwd_add ::$2-:$3"
