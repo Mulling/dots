@@ -1,6 +1,6 @@
 #!/bin/sh
 
-PDF_PATH="$HOME/dots/literally-pirated-books"
+PDF_PATH="$HOME/dl"
 
 set -e
 
