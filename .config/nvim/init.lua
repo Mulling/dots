@@ -17,22 +17,14 @@ packer.startup(function()
     local use = packer.use
     use 'wbthomason/packer.nvim'
 
-    use 'kyazdani42/nvim-tree.lua'
-
-    use { 'rmagatti/session-lens', requires = { 'rmagatti/auto-session' } }
-
     use 'echasnovski/mini.completion'
+    use 'echasnovski/mini.surround'
     use 'echasnovski/mini.trailspace'
-
     use 'mfussenegger/nvim-lint'
-
     use 'neovim/nvim-lspconfig'
-
-    use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
-
-    use { 'nvim-telescope/telescope.nvim', tag = '0.1.4', requires = { { 'nvim-lua/plenary.nvim' } } }
-
     use { 'hrsh7th/nvim-cmp', requires = { { 'hrsh7th/cmp-buffer', 'hrsh7th/cmp-nvim-lsp', 'L3MON4D3/LuaSnip' } } }
+    use { 'nvim-telescope/telescope.nvim', tag = '0.1.4', requires = { { 'nvim-lua/plenary.nvim' } } }
+    use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
 
     if bootstrap then packer.sync() end
 end)
@@ -56,7 +48,7 @@ vim.opt.switchbuf = 'useopen'
 
 -- Statusline
 vim.opt.statusline = " %F %h%m%r%=%-13.(%l,%c%V%) %P %<" -- just the default one
-vim.opt.laststatus = 1 -- only if there are at least two windows
+vim.opt.laststatus = 1                                   -- only if there are at least two windows
 
 -- Identation
 vim.opt.expandtab = true
@@ -124,30 +116,13 @@ local on_attach = function(client, buff)
     lsp_map('n', 'K', vim.lsp.buf.hover)
 end
 
-require 'session-lens'.setup {
-    theme_conf = { border = true, borderchars = { ' ' } },
-}
-
-require 'auto-session'.setup {
-    log_level = "error",
-    auto_session_suppress_dirs = { "~/", "~/projects", "~/dev", "/" },
-}
-
-require 'nvim-tree'.setup {
-    sort_by = "case_sensitive",
-    renderer = { group_empty = true },
-    view = { adaptive_size = true },
-    filters = { dotfiles = true }
-}
-
 -- require 'mini.completion'.setup { delay = { completion = 150, info = 10 ^ 7, signature = 150 } }
 require 'mini.trailspace'.setup { only_in_normal_buffers = true }
+require 'mini.surround'.setup {}
 
 require 'telescope'.setup {
     defaults = { border = true, borderchars = { ' ' } }
 }
-
-require 'telescope'.load_extension('session-lens')
 
 require 'nvim-treesitter.configs'.setup {
     auto_install = true,
@@ -188,6 +163,7 @@ require 'cmp'.setup {
 }
 
 local capabilities = require 'cmp_nvim_lsp'.default_capabilities(vim.lsp.protocol.make_client_capabilities())
+
 require 'lspconfig'['clangd'].setup {
     on_attach = on_attach,
     capabilities = capabilities,
@@ -207,19 +183,17 @@ require 'lspconfig'['rust_analyzer'].setup {
     root_dir = require 'lspconfig'.util.root_pattern('Cargo.toml', 'rust-project.json', '.git'),
     settings = {
         ["rust-analyzer"] = {
-            -- TODO: automate this
-            checkOnSave = {
-                command = "clippy"
+            cargo = {
+                features = "all"
             },
             procMacro = {
-                enable = false
+                enable = true
             },
-            -- checkOnSave = {
-            --     allFeatures = true,
-            --     overrideCommand = {
-            --         'cargo', 'clippy', '--workspace', '--message-format=json', '--all-targets', '--all-features'
-            --     }
-            -- }
+            checkOnSave = true,
+            chceck = {
+                command = "clippy",
+                features = "all"
+            }
         }
     }
 }
