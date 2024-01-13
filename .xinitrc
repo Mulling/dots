@@ -10,6 +10,7 @@ fi
 [ -f "$HOME/.Xresources" ] && xrdb "$HOME/.Xresources"
 
 pulseaudio --start &
+slstatus &
 
 export \
     PATH="$PATH:$HOME/dots/scripts/:$HOME/.local/bin" \
@@ -17,6 +18,5 @@ export \
     _JAVA_AWT_WM_NONREPARENTING=1 # James Gosling at it again
 
 [ -f "$HOME/.fehbg" ] && "$HOME/.fehbg" 2>/dev/null
-[ -f "$HOME/dots/scripts/status" ] && "$HOME/dots/scripts/status" 2>/dev/null
 
 exec dwm >/dev/null 2>&1

@@ -29,12 +29,9 @@ packer.startup(function()
     if bootstrap then packer.sync() end
 end)
 
--- Required by nvim-tree
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
-
 -- Behave like emacs
 vim.opt.scrolljump = -50
+
 -- Search
 vim.opt.smartcase = true
 vim.opt.ignorecase = true
@@ -80,7 +77,6 @@ map('n', '<c-l>', ':bp<cr>')
 -- map('n', '<leader>/', ':grep<space>')
 map('n', '<leader><space>', ':b#<cr>')
 map('n', '<leader>s', ':setlocal spell!<cr>')
-map('n', '<m- >', ':NvimTreeToggle<cr>')
 map('n', 'Y', 'y$')
 -- When we don't have LSP, just trim the whitespace
 map('n', '<leader>f', require 'mini.trailspace'.trim)
@@ -131,8 +127,6 @@ require 'nvim-treesitter.configs'.setup {
 
 require 'lint'.linters_by_ft = {
     sh = { 'shellcheck' },
-    -- TODO: make this one work
-    -- cpp = { 'clangtidy' }
 }
 
 require 'cmp'.setup {
@@ -164,20 +158,22 @@ require 'cmp'.setup {
 
 local capabilities = require 'cmp_nvim_lsp'.default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
-require 'lspconfig'['clangd'].setup {
+require 'lspconfig'.clangd.setup {
     on_attach = on_attach,
     capabilities = capabilities,
     root_dir = require 'lspconfig'.util.root_pattern('build/compile_commands.json', '.git')
 }
 
-require 'lspconfig'['lua_ls'].setup {
+require 'lspconfig'.lua_ls.setup {
     on_attach = on_attach,
     capabilities = capabilities,
     -- Fix warning for global variable 'vim'
     settings = { Lua = { diagnostics = { globals = { 'vim' } } } }
 }
 
-require 'lspconfig'['rust_analyzer'].setup {
+require 'lspconfig'.zls.setup {}
+
+require 'lspconfig'.rust_analyzer.setup {
     on_attach = on_attach,
     capabilities = capabilities,
     root_dir = require 'lspconfig'.util.root_pattern('Cargo.toml', 'rust-project.json', '.git'),
@@ -198,13 +194,13 @@ require 'lspconfig'['rust_analyzer'].setup {
     }
 }
 
-require 'lspconfig'['hls'].setup {
+require 'lspconfig'.hls.setup {
     on_attach = on_attach,
     capabilities = capabilities,
     filetypes = { 'haskell', 'lhaskell', 'cabal' }
 }
 
-require 'lspconfig'['tsserver'].setup {
+require 'lspconfig'.tsserver.setup {
     on_attach = on_attach,
     capabilities = capabilities,
     filetypes = { "typescript", "typescriptreact", "typescript.tsx" },
