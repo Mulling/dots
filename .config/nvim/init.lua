@@ -20,8 +20,10 @@ packer.startup(function()
     use 'echasnovski/mini.completion'
     use 'echasnovski/mini.surround'
     use 'echasnovski/mini.trailspace'
+
     use 'mfussenegger/nvim-lint'
     use 'neovim/nvim-lspconfig'
+
     use { 'hrsh7th/nvim-cmp', requires = { { 'hrsh7th/cmp-buffer', 'hrsh7th/cmp-nvim-lsp', 'L3MON4D3/LuaSnip' } } }
     use { 'nvim-telescope/telescope.nvim', tag = '0.1.4', requires = { { 'nvim-lua/plenary.nvim' } } }
     use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
@@ -112,6 +114,33 @@ local on_attach = function(client, buff)
     lsp_map('n', 'K', vim.lsp.buf.hover)
 end
 
+local on_attach_rust = function (client, buff)
+    local expand_macro = function()
+        client.request(
+            'rust-analyzer/expandMacro',
+            vim.lsp.util.make_position_params(),
+            function(_, macro)
+                if macro == nil then
+                    return vim.notify('no macro under the cursor', vim.log.levels.WARN)
+                end
+
+                local text = vim.split(macro.expansion, '\n', { plain = true })
+
+                vim.lsp.util.open_floating_preview(text, 'rust', {
+                    focus = true,
+                    focus_id = "rust macro expansion",
+                })
+            end
+        )
+    end
+
+    vim.keymap.set('n', 'M', expand_macro, { noremap = true, silent = true, buffer = buff })
+
+    on_attach(client, buff)
+end
+
+
+
 -- require 'mini.completion'.setup { delay = { completion = 150, info = 10 ^ 7, signature = 150 } }
 require 'mini.trailspace'.setup { only_in_normal_buffers = true }
 require 'mini.surround'.setup {}
@@ -126,7 +155,7 @@ require 'nvim-treesitter.configs'.setup {
 }
 
 require 'lint'.linters_by_ft = {
-    sh = { 'shellcheck' },
+    sh = { 'shellcheck' }
 }
 
 require 'cmp'.setup {
@@ -173,8 +202,8 @@ require 'lspconfig'.lua_ls.setup {
 
 require 'lspconfig'.zls.setup {}
 
-require 'lspconfig'.rust_analyzer.setup {
-    on_attach = on_attach,
+require 'lspconfig'['rust_analyzer'].setup {
+    on_attach = on_attach_rust,
     capabilities = capabilities,
     root_dir = require 'lspconfig'.util.root_pattern('Cargo.toml', 'rust-project.json', '.git'),
     settings = {
@@ -207,6 +236,8 @@ require 'lspconfig'.tsserver.setup {
     cmd = { "typescript-language-server", "--stdio" }
 }
 
+require 'lspconfig'.pyright.setup {}
+
 local UsrFileype = vim.api.nvim_create_augroup("UsrFiletype", { clear = true })
 
 vim.api.nvim_create_autocmd("Filetype", {
@@ -225,7 +256,7 @@ vim.api.nvim_create_autocmd("Filetype", {
         vim.opt_local.shiftwidth = 2
     end,
     group = UsrFileype,
-    pattern = "haskell",
+    pattern = "haskell,typescriptreact",
 })
 
 -- Disable line numbers in QuickFix lists
