@@ -90,3 +90,7 @@ hi! link NvimTreeStatusLineNC  StatusLineNU
 
 " sorry what!?
 hi! link @error Comment
+
+" FUCK OFF
+hi! link @keyword.import PreProc
+hi! link @keyword.directive PreProc

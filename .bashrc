@@ -69,5 +69,10 @@ export \
 # hack
 bind '"\C-z":"fg\015"'
 
+export \
+    PATH="$PATH:$HOME/dots/scripts/:$HOME/.local/bin" \
+    CMAKE_EXPORT_COMPILE_COMMANDS=1 \
+    _JAVA_AWT_WM_NONREPARENTING=1 # James Gosling at it again
+
 [ -f "$HOME/.cargo/env" ] && source "$HOME/.cargo/env"
 [ -f "/home/mulling/.ghcup/env" ] && source "/home/mulling/.ghcup/env"
