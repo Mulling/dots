@@ -114,7 +114,7 @@ local on_attach = function(client, buff)
     lsp_map('n', 'K', vim.lsp.buf.hover)
 end
 
-local on_attach_rust = function (client, buff)
+local on_attach_rust = function(client, buff)
     local expand_macro = function()
         client.request(
             'rust-analyzer/expandMacro',
@@ -151,7 +151,16 @@ require 'telescope'.setup {
 
 require 'nvim-treesitter.configs'.setup {
     auto_install = true,
-    highlight = { enable = true, additional_vim_regex_highlighting = false }
+    highlight = { enable = true, additional_vim_regex_highlighting = false },
+    incremental_selection = {
+        enable = true,
+        keymaps = {
+            init_selection = false,
+            scope_incremental = false,
+            node_incremental = '.',
+            node_decremental = ',',
+        },
+    },
 }
 
 require 'lint'.linters_by_ft = {

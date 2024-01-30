@@ -10,4 +10,5 @@ SortIncludes: 'true'
 SpaceAfterTemplateKeyword: 'true'
 SpaceBeforeCpp11BracedList: 'true'
 SpacesInContainerLiterals: 'true'
+BreakAfterAttributes: Always
 ...
