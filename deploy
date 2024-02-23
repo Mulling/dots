@@ -23,6 +23,7 @@ arr["$DOTS_PATH.config/nvim/colors/based.vim"]="$HOME/.config/nvim/colors/based.
 arr["$DOTS_PATH.config/tmux/tmux.conf"]="$HOME/.config/tmux/tmux.conf"
 arr["$DOTS_PATH.config/dunst/dunstrc"]="$HOME/.config/dunst/dunstrc"
 arr["$DOTS_PATH.config/user-dirs.dirs"]="$HOME/.config/user-dirs.dirs"
+arr["${DOTS_PATH}fonts/"]="$HOME/.local/share/fonts"
 
 for key in "${!arr[@]}"; do
 
