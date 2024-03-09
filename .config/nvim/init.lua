@@ -17,7 +17,6 @@ packer.startup(function()
     local use = packer.use
     use 'wbthomason/packer.nvim'
 
-    use 'echasnovski/mini.completion'
     use 'echasnovski/mini.surround'
     use 'echasnovski/mini.trailspace'
 
@@ -134,14 +133,34 @@ local on_attach_rust = function(client, buff)
         )
     end
 
+    local view_ir = function(lvl)
+        return function()
+            client.request(
+                'rust-analyzer/view' .. lvl,
+                vim.lsp.util.make_position_params(0, nil),
+                function(_, mir)
+                    if mir == nil then
+                        return vim.notify('fail to view ' .. lvl, vim.log.levels.WARN)
+                    end
+
+                    local text = vim.split(mir, '\n', { plain = true })
+
+                    vim.lsp.util.open_floating_preview(text, 'rust', {
+                        focus = true,
+                        focus_id = "rust " .. lvl,
+                    })
+                end
+            )
+        end
+    end
+
     vim.keymap.set('n', 'M', expand_macro, { noremap = true, silent = true, buffer = buff })
+    vim.keymap.set('n', '<leader>vm', view_ir('Mir'), { noremap = true, silent = true, buffer = buff })
+    vim.keymap.set('n', '<leader>vh', view_ir('Hir'), { noremap = true, silent = true, buffer = buff })
 
     on_attach(client, buff)
 end
 
-
-
--- require 'mini.completion'.setup { delay = { completion = 150, info = 10 ^ 7, signature = 150 } }
 require 'mini.trailspace'.setup { only_in_normal_buffers = true }
 require 'mini.surround'.setup {}
 
@@ -223,11 +242,22 @@ require 'lspconfig'['rust_analyzer'].setup {
             procMacro = {
                 enable = true
             },
-            checkOnSave = true,
-            chceck = {
+            checkOnSave = {
+                allFeatures = true,
                 command = "clippy",
-                features = "all"
-            }
+                extraArgs = {
+                    "--",
+                    "--no-deps",
+                    "-Dclippy::correctness",
+                    "-Dclippy::complexity",
+                    "-Wclippy::perf",
+                    "-Wclippy::pedantic",
+                    "-Aclippy::module-name-repetitions",
+                    "-Aclippy::struct-field-names",
+                    "-Aclippy::missing-errors-doc",
+                    "-Aclippy::used-underscore-binding"
+                },
+            },
         }
     }
 }
