@@ -18,8 +18,10 @@ if [ -x "$(command -v tmux)" ] && [ -n "${DISPLAY}" ] && [ -z "${TMUX}" ]; then
     exec tmux >/dev/null 2>&1
 fi
 
+alias combine-sinks='pactl load-module module-combine-sink'
 alias cp='cp -i'
 alias df='df -h'
+alias dru='docker run -it --rm --volume /etc/passwd:/etc/passwd:ro --volume /etc/group:/etc/group:ro --user $(id -u):$(id -g)'
 alias feh='feh -.'
 alias free='free -m'
 alias grep='rg --no-heading'
@@ -30,8 +32,7 @@ alias more='echo no more, use less'
 alias mpv='mpv --hwdec=auto'
 alias mu=mupdf
 alias pingle='ping 8.8.4.4'
-alias poweroff='loginctl poweroff'
-alias reboot='loginctl reboot'
+alias reset='tput reset'
 alias rm='rm -i'
 alias vim=nvim
 
@@ -53,6 +54,8 @@ shopt -s \
 
 MAKEFLAGS="-j$(nproc)"
 PS0='$(stty susp ^z)'
+# hack
+bind '"\C-z":"fg\015"'
 
 export \
     BROWSER=brave \
@@ -66,13 +69,19 @@ export \
     PS0 \
     TERMINAL=st
 
-# hack
-bind '"\C-z":"fg\015"'
-
 export \
     PATH="$PATH:$HOME/dots/scripts/:$HOME/.local/bin" \
     CMAKE_EXPORT_COMPILE_COMMANDS=1 \
     _JAVA_AWT_WM_NONREPARENTING=1 # James Gosling at it again
 
+# rustup
 [ -f "$HOME/.cargo/env" ] && source "$HOME/.cargo/env"
-[ -f "/home/mulling/.ghcup/env" ] && source "/home/mulling/.ghcup/env"
+# ghcup
+[ -f /home/mulling/.ghcup/env ] && source "$HOME/.ghcup/env"
+# nomachine
+[ -d /usr/NX/bin/ ] && export PATH=/usr/NX/bin/:$PATH
+# bun
+if [ -d "$HOME/.bun" ]; then
+    export BUN_INSTALL="$HOME/.bun"
+    export PATH=$BUN_INSTALL/bin:$PATH
+fi
