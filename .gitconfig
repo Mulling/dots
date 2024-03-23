@@ -20,3 +20,5 @@
 	rebase = true
 [merge]
 	tool = nvimdiff1
+[rebase]
+	autoStash = true
