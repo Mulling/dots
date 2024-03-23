@@ -24,7 +24,7 @@ packer.startup(function()
     use 'neovim/nvim-lspconfig'
 
     use { 'hrsh7th/nvim-cmp', requires = { { 'hrsh7th/cmp-buffer', 'hrsh7th/cmp-nvim-lsp', 'L3MON4D3/LuaSnip' } } }
-    use { 'nvim-telescope/telescope.nvim', tag = '0.1.4', requires = { { 'nvim-lua/plenary.nvim' } } }
+    use { 'nvim-telescope/telescope.nvim', requires = { { 'nvim-lua/plenary.nvim' } } }
     use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
 
     if bootstrap then packer.sync() end
