@@ -255,7 +255,8 @@ require 'lspconfig'['rust_analyzer'].setup {
                     "-Aclippy::module-name-repetitions",
                     "-Aclippy::struct-field-names",
                     "-Aclippy::missing-errors-doc",
-                    "-Aclippy::used-underscore-binding"
+                    "-Aclippy::used-underscore-binding",
+                    "-Aclippy::missing_panics_doc"
                 },
             },
         }
