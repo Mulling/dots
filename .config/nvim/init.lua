@@ -110,7 +110,6 @@ local on_attach = function(client, buff)
     lsp_map('n', '<leader>f', function() vim.lsp.buf.format { async = true } end)
     lsp_map('n', '<leader>r', require 'telescope.builtin'.lsp_references)
     lsp_map('n', '<space>R', vim.lsp.buf.rename)
-    lsp_map('n', 'K', vim.lsp.buf.hover)
 end
 
 local on_attach_rust = function(client, buff)
