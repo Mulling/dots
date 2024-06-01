@@ -22,3 +22,5 @@
 	tool = nvimdiff1
 [rebase]
 	autoStash = true
+[tag]
+	sort = -taggerdate
