@@ -1,5 +1,4 @@
-uset selection-clipboard clipboard
 set adjust-open "width"
-
+set selection-clipboard clipboard
 # this is bugged and causes the background of the statusbar to be transparent
 set font "Consolas:pixelsize=15"
