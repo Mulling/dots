@@ -227,7 +227,12 @@ require 'lspconfig'.lua_ls.setup {
     settings = { Lua = { diagnostics = { globals = { 'vim' } } } }
 }
 
-require 'lspconfig'.zls.setup {}
+require 'lspconfig'.zls.setup {
+    settings = {
+        enable_build_on_save = true,
+        build_on_save_command = "check"
+    }
+}
 
 require 'lspconfig'['rust_analyzer'].setup {
     on_attach = on_attach_rust,
