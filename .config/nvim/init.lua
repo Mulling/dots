@@ -229,8 +229,9 @@ require 'lspconfig'.lua_ls.setup {
 
 require 'lspconfig'.zls.setup {
     settings = {
-        enable_build_on_save = true,
-        build_on_save_command = "check"
+        zls = {
+            semantic_tokens ='none',
+        }
     }
 }
 
