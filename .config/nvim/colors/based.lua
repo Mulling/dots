@@ -238,6 +238,9 @@ hi('Ignore', { ctermfg = 0 })
 -- Lua
 hi("@constructor.lua", { ctermfg = 7 })
 
+-- Zig
+hi("@attribute.zig", { link = 'Keyword' })
+
 -- Cmp
 hi('CmpItemAbbrMatch', { link = 'Normal' })
 hi('CmpItemAbbrMatchFuzzy', { link = 'Normal' })

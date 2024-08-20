@@ -230,7 +230,7 @@ require 'lspconfig'.lua_ls.setup {
 require 'lspconfig'.zls.setup {
     settings = {
         zls = {
-            semantic_tokens ='none',
+            semantic_tokens = 'none',
         }
     }
 }
