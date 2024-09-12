@@ -274,7 +274,7 @@ require 'lspconfig'.hls.setup {
     filetypes = { 'haskell', 'lhaskell', 'cabal' }
 }
 
-require 'lspconfig'.tsserver.setup {
+require 'lspconfig'.ts_ls.setup {
     on_attach = on_attach,
     capabilities = capabilities,
     filetypes = { "typescript", "typescriptreact", "typescript.tsx" },
