@@ -55,7 +55,7 @@ shopt -s \
 MAKEFLAGS="-j$(nproc)"
 PS0='$(stty susp ^z)'
 # hack
-bind '"\C-z":"fg\015"'
+bind '"\C-z":"\C-afg \015"'
 
 export \
     BROWSER=brave \
