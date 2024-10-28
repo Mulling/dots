@@ -9,8 +9,11 @@
 [alias]
     tree = "!git log --graph --decorate --pretty=oneline --abbrev-commit"
     rank = "shortlog -s -n --no-merges"
+    who = "blame -wCCC"
 [credential]
     helper = cache --timeout=3600
+[rerere]
+    enabled = true
 [init]
     defaultBranch = master
 [color "diff"]
@@ -21,6 +24,8 @@
 [merge]
 	tool = nvimdiff1
 [rebase]
-	autoStash = true
+    autoStash = true
 [tag]
-	sort = -taggerdate
+    sort = -taggerdate
+[branch]
+    sort = -committerdate
