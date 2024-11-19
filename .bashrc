@@ -74,6 +74,8 @@ export \
     CMAKE_EXPORT_COMPILE_COMMANDS=1 \
     _JAVA_AWT_WM_NONREPARENTING=1 # James Gosling at it again
 
+# zigup
+[ -f "/home/mlso/.zigup/env" ] && source "/home/mlso/.zigup/env"
 # rustup
 [ -f "$HOME/.cargo/env" ] && source "$HOME/.cargo/env"
 # ghcup
