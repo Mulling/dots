@@ -65,7 +65,6 @@ export \
     LESSHISTFILE=/dev/null \
     LFS=/mnt/lfs \
     MAKEFLAGS \
-    MANPAGER="less -R -Dd+g -Dd+r" \
     PS0 \
     TERMINAL=st
 
@@ -74,12 +73,12 @@ export \
     CMAKE_EXPORT_COMPILE_COMMANDS=1 \
     _JAVA_AWT_WM_NONREPARENTING=1 # James Gosling at it again
 
-# zigup
-[ -f "/home/mlso/.zigup/env" ] && source "/home/mlso/.zigup/env"
+# zup
+[ -f "$HOME/.zup/env" ] && source "$HOME/.zup/env"
 # rustup
 [ -f "$HOME/.cargo/env" ] && source "$HOME/.cargo/env"
 # ghcup
-[ -f /home/mulling/.ghcup/env ] && source "$HOME/.ghcup/env"
+[ -f "$HOME/.ghcup/env" ] && source "$HOME/.ghcup/env"
 # nomachine
 [ -d /usr/NX/bin/ ] && export PATH=/usr/NX/bin/:$PATH
 # bun
