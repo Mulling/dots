@@ -3,6 +3,7 @@
 
 vim.cmd.highlight('clear')
 vim.g.colors_name = 'b'
+vim.o.termguicolors = false
 
 local hi = function(name, val)
     val.force = true
